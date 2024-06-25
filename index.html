@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="MoA: Mixture of Sparse Attention for Automatic Large Language Model Compression">
+  <meta name="keywords" content="Language Model, Compression, Sparse Attention">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MoA: Mixture of Sparse Attention for Automatic Large Language Model Compression</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"> <img src="./static/images/logo.png" style="width: 3em; vertical-align: bottom;"  />MoA: Mixture of Sparse Attention for Automatic Large Language Model Compression</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://fuvty.simple.ink/">Tianyu Fu</a><sup>1,2,*</sup>,</span>
+            <span class="author-block">
+              <a href="https://github.com/jason-huang03">Haofeng Huang</a><sup>1,2,*</sup>,</span>
+            <span class="author-block">
+              <a href="https://nicsefc.ee.tsinghua.edu.cn/people/XuefeiNing">Xuefei Ning</a><sup>1,*</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://zhang677.github.io/">Genghan Zhang</a><sup>3</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://nicsefc.ee.tsinghua.edu.cn/people.html">Boju Chen</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://nicsefc.ee.tsinghua.edu.cn/people/TianqiWu">Tianqi Wu</a><sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://nicsefc.ee.tsinghua.edu.cn/people/HongyiWang">Hongyi Wang</a><sup>1,2</sup>
+            </span>
+            <span class="author-block">
+              <a href="https://nicsefc.ee.tsinghua.edu.cn/people/ZixiaoHuang">Zixiao Huang</a><sup>1,2</sup>
+            </span>
+            <span class="author-block">
+              <a href="https://nicsefc.ee.tsinghua.edu.cn/people/ShiyaoLi">Shiyao Li</a><sup>1,2</sup>
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=SvE3bdUAAAAJ&hl=en">Shengen Yan</a><sup>1,2</sup>
+            </span>
+            <span class="author-block">
+              <a href="https://dai.sjtu.edu.cn/pepledetail.html?id=218">Guohao Dai</a><sup>2,4</sup>
+            </span>
+            <span class="author-block">
+              <a href="https://www.ee.tsinghua.edu.cn/en/info/1067/1292.htm">Huazhong Yang</a><sup>1</sup>
+            </span>
+            <span class="author-block">
+              <a href="https://nicsefc.ee.tsinghua.edu.cn/people/YuWang">Yu Wang</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Tsinghug University,</span>
+            <span class="author-block"><sup>2</sup>Infinigence-AI,</span>
+            <span class="author-block"><sup>3</sup>Stanford University,</span>
+            <span class="author-block"><sup>4</sup>Shanghai Jiao Tong University</span>
+            <br>
+            <span class="author-block"><sup>*</sup>Equal contribution</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2406.14909v1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/thu-nics/MoA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- MoA Introduction -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">TL;DR</h2>
+        <div class="content has-text-justified">
+          <p>
+            Mixture-of-Sparse-Attention (MoA) compresses attention in LLMs, so that they compute <b>short attention</b>, but remember <b>long context</b>.
+          </p>
+          <p>
+            🎉 Introducing Mixture-of-Sparse-Attention (MoA) - our new method for compressing attention in LLMs!
+          </p>
+          <p>
+            🚀 Achieves <b>5.5-6.7x</b> faster throughput than dense FlashAttention2.
+          </p>
+          <p>
+            🎯 Improves retrieval accuracy by <b>1.5-7.1x</b> compared to uniform sparse attention.
+          </p>
+          <p>
+            🤗 Easy to use with our automatic compression pipeline - deploy in just a <b>few lines of code!</b>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ MoA Introduction -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Sparse attention can effectively mitigate the significant memory and throughput demands of Large Language Models (LLMs) in long contexts. Existing methods typically employ a uniform sparse attention mask, applying the same sparse pattern across different attention heads and input lengths. However, this approach fails to capture the diverse attention patterns inherent in LLMs, ignoring their distinct accuracy-latency trade-offs.
+          </p>
+          <p>
+            To address this challenge, we propose the Mixture of Attention (MoA), which automatically tailors distinct sparse attention configurations to different heads and layers. MoA constructs and navigates a search space of various attention patterns and their scaling rules relative to input sequence lengths. It profiles the model, evaluates potential configurations, and pinpoints the optimal sparse attention compression plan. MoA adapts to varying input sizes, revealing that some attention heads expand their focus to accommodate longer sequences, while others consistently concentrate on fixed-length local contexts.
+          </p>
+          <p>
+            Experiments show that MoA increases the effective context length by approximately 3.9x with the same average attention span, boosting retrieval accuracy by 1.5-7.1x over the uniform-attention baseline across Vicuna-7B, Vicuna-13B, and Llama3-8B models. Moreover, MoA narrows the capability gaps between sparse and dense models, reducing the maximum relative performance drop from 9%-36% to within 5% across two long-context understanding benchmarks. MoA achieves a 1.2x1.4x GPU memory reduction and boosts decode throughput by 5.5-6.7x for 7B and 13B dense models on a single GPU, with minimal impact on performance.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- /Abstract -->
+  </div>
+</section>
+
+
+<section class="section">
+
+  <!-- Motivation. -->
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Observation</h2>
+        <div class="has-text-centered">
+          <img src="./static/images/oracle.jpg" alt="Oracle Image" style="width: 70%;">
+        </div>
+        <br>
+        <!-- Generalization. -->
+        <h3 class="title is-4">Heterogeneous Attention Patterns</h3>
+        <div class="content has-text-justified">
+          <p>
+            Different attention heads in LLMs exhibit heterogeneous attention patterns. In the figure above, the first head primarily focuses on local contexts with a narrow-span sliding window, while the third head covers nearly the entire input, indicating global attention. 
+          </p>
+        </div>
+        
+        <h3 class="title is-4">Heterogeneous Elastic Rules</h3>
+        <div class="content has-text-justified">
+          <p>
+            In addition to heterogeneity at a certain length, different attention heads also exhibit varying elastic behaviors as the input length changes. 
+            The figure above illustrates this variability: 
+            for shorter inputs (the upper left part of the attention matrix), the second and third heads initially show global attention. However, as input length increases, the second head remains the medium-span local focus, while the third head continues to expand as global attention.
+          </p>
+        </div>
+
+        <br/>
+        <!--/ Generalization. -->
+      </div>
+    </div>
+  <!--/ Motivation. -->
+  </div>
+</div>
+
+
+
+<section class="section">
+  <!-- Motivation. -->
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Methodology</h2>
+
+        <div class="content has-text-centered">
+          <img src="./static/images/workflow.jpg"
+          class="exp-image"
+          alt="Work Flow"
+          style="width: 100%"/>
+        </div>
+
+        <!-- Generalization. -->
+        <h3 class="title is-4">Elastic Rule Search Space</h3>
+        <div class="content has-text-justified">
+          <p>
+          Taking into account the inherently heterogeneous and elastic nature of LLM attention patterns, MoA adopts a hardware friendly sliding window mask with initial tokens as attention sink. The attention span of head is formulated as a linear function of input length.
+          </p>
+        </div>
+
+
+        <!-- Generalization. -->
+        <h3 class="title is-4">Attention Influence Profiling</h3>
+        <div class="content has-text-justified">
+          <p>
+            MoA approximates the loss increase of masking each attention value using first-order Taylor expansion. In practice, we use backpropagation on a calibration dataset to calculate the average attention influence of each head and layer.
+          </p>
+          <p>
+            Our key insight is that the calibration dataset should feature long range dependency and model alignment. MoA utilizes long-contextual MultiNews dataset, calculating the loss only on the summary part and more importantly, uses the reponse of dense model instead of the ground truth answer.
+          </p>
+          <div class="content has-text-centered">
+            <img src="./static/images/calibration.png"
+            class="exp-image"
+            alt="dataset ablation"
+            style="width: 100%"/>
+          </div>
+          
+        </div>
+        <br/>
+        <h3 class="title is-4">Automatic Optimization</h3>
+        <div class="content has-text-justified">
+          <p>
+            MoA automatically selects the optimal elastic rule for each attention head to minimize accuracy losses across various sequence lengths under density budgets. 
+            Based on the profiling results, MoA first identifies Pareto front compression plans where any improvement in accuracy loss at one profile length would worsen another. 
+          </p>
+          <p>
+            To ensure the best generalization to lengths beyond those profiled, MoA then selects the plan that yields the minimum loss at an unseen length among the Pareto front solutions as the final plan.
+          </p>
+        </div>
+        <!-- <div class="content has-text-centered">
+          <img src="./static/src/spbn.png"
+          class="exp-image"
+          alt="Experimental Results Image."
+          width="800px" height="400px"/>
+        </div> -->
+        <br/>
+        <!--/ Generalization. -->
+        <br/>
+                
+      </div>
+    </div>
+  <!--/ Motivation. -->
+  </div>
+</div>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3"> Experiments and Analysis:  </h2>
+          <!-- Perf. -->
+          <h3 class="title is-4"> 🖼️  Overall Performance</h3>
+          <div class="content has-text-justified">
+            <p>
+              MoA outperforms state-of-the-art sparse attention methods and achieves comparable performance to the original dense model at 50% density. 
+              On average, MoA exhibits only a minor 1% drop in relative accuracy for retrieval tasks. Furthermore, it demonstrates a maximum relative drop of just 5% and 3% in scores across two benchmarks——significantly smaller than those observed with baseline methods.
+            </p>
+          </div>
+          <div class="content has-text-centered">
+            <img src="./static/images/main_result.png"
+            class="exp-image"
+            alt="Experimental Results Image."
+            style="width: 85%"/>  
+          </div>
+
+        <!--/ Perf. -->
+        <!-- AttnMap. -->
+        <h3 class="title is-4"> 🧭 Efficiency Improvement</h3>
+        <div class="content has-text-justified">
+          <p>
+            MoA reduces the GPU memory footprint by 1.2x-1.4x and boosts the throughput of dense models by 5.5-6.7x on a single GPU, primarily attributed to a static-size KV-Cache, reduced attention computations and increased batch size.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <img src="./static/images/throughput.png"
+          class="exp-image"
+          alt="efficiency result."
+          style="width: 65%;"/>
+        </div>
+        
+        <h3 class="title is-4">Ablation Studies</h3>
+        <p>
+          Starting with a basic uniform mask, we observe significant enhancements by sequentially introducing heterogeneity: layers first, then heads, and finally elastic rules.
+        </p>
+        <div class="content has-text-centered">
+          <img src="./static/images/ablation.png"
+          class="exp-image"
+          alt="Experimental Results Image."
+          style="width: 55%"/>
+        </div>
+        
+      </div>
+    </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@misc{fu2024moa,
+      title={MoA: Mixture of Sparse Attention for Automatic Large Language Model Compression}, 
+      author={Tianyu Fu and Haofeng Huang and Xuefei Ning and Genghan Zhang and Boju Chen and Tianqi Wu and Hongyi Wang and Zixiao Huang and Shiyao Li and Shengen Yan and Guohao Dai and Huazhong Yang and Yu Wang},
+      year={2024},
+      eprint={2406.14909},
+      archivePrefix={arXiv},
+      primaryClass={id='cs.LG' full_name='Machine Learning' is_active=True alt_name=None in_archive='cs' is_general=False description='Papers on all aspects of machine learning research (supervised, unsupervised, reinforcement learning, bandit problems, and so on) including also robustness, explanation, fairness, and methodology. cs.LG is also an appropriate primary category for applications of machine learning methods.'}
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
