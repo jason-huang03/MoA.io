@@ -140,7 +140,7 @@
             🎉 Introducing Mixture-of-Sparse-Attention (MoA) - our new method for compressing attention in LLMs!
           </p>
           <p>
-            🚀 Achieves <b>5.5-6.7x</b> faster throughput than dense FlashAttention2.
+            🚀 Achieves <b>6.6−8.2x</b> faster throughput than dense FlashAttention2.
           </p>
           <p>
             🎯 Improves retrieval accuracy by <b>1.5-7.1x</b> compared to uniform sparse attention.
@@ -180,7 +180,7 @@
             To address this challenge, we propose the Mixture of Attention (MoA), which automatically tailors distinct sparse attention configurations to different heads and layers. MoA constructs and navigates a search space of various attention patterns and their scaling rules relative to input sequence lengths. It profiles the model, evaluates potential configurations, and pinpoints the optimal sparse attention compression plan. MoA adapts to varying input sizes, revealing that some attention heads expand their focus to accommodate longer sequences, while others consistently concentrate on fixed-length local contexts.
           </p>
           <p>
-            Experiments show that MoA increases the effective context length by approximately 3.9x with the same average attention span, boosting retrieval accuracy by 1.5-7.1x over the uniform-attention baseline across Vicuna-7B, Vicuna-13B, and Llama3-8B models. Moreover, MoA narrows the capability gaps between sparse and dense models, reducing the maximum relative performance drop from 9%-36% to within 5% across two long-context understanding benchmarks. MoA achieves a 1.2x1.4x GPU memory reduction and boosts decode throughput by 5.5-6.7x for 7B and 13B dense models on a single GPU, with minimal impact on performance.
+            Experiments show that MoA increases the effective context length by 3.9x with the same average attention span, boosting retrieval accuracy by 1.5-7.1x over the uniform-attention baseline across Vicuna-{7B,13B}, and Llama3-{8B,70B} models. Moreover, MoA narrows the capability gaps between sparse and dense models, reducing the maximum relative performance drop from 9%-36% to within 5% across two long-context understanding benchmarks. MoA achieves a 1.2-1.4x GPU memory reduction, boosting decode throughput by 6.6-8.2x and 1.7-1.9x compared to FlashAttention2 and vLLM, with minimal impact on performance.
           </p>
         </div>
       </div>
@@ -302,7 +302,7 @@
         <div class="column is-full-width">
           <h2 class="title is-3"> Experiments and Analysis:  </h2>
           <!-- Perf. -->
-          <h3 class="title is-4"> 🖼️  Overall Performance</h3>
+          <h3 class="title is-4"> 📈  Overall Performance</h3>
           <div class="content has-text-justified">
             <p>
               MoA outperforms state-of-the-art sparse attention methods and achieves comparable performance to the original dense model at 50% density. 
@@ -321,17 +321,17 @@
         <h3 class="title is-4"> 🧭 Efficiency Improvement</h3>
         <div class="content has-text-justified">
           <p>
-            MoA reduces the GPU memory footprint by 1.2x-1.4x and boosts the throughput of dense models by 5.5-6.7x on a single GPU, primarily attributed to a static-size KV-Cache, reduced attention computations and increased batch size.
+            MoA reduces the GPU memory footprint by 1.2x-1.4x and boosts the throughput of dense models by 6.6−8.2x on a single GPU, primarily attributed to a static-size KV-Cache, reduced attention computations, increased batch size, and optimized GPU kernel.
           </p>
         </div>
         <div class="content has-text-centered">
           <img src="./static/images/throughput.png"
           class="exp-image"
           alt="efficiency result."
-          style="width: 65%;"/>
+          style="width: 85%;"/>
         </div>
         
-        <h3 class="title is-4">Ablation Studies</h3>
+        <h3 class="title is-4"> 🔍 Ablation Studies</h3>
         <p>
           Starting with a basic uniform mask, we observe significant enhancements by sequentially introducing heterogeneity: layers first, then heads, and finally elastic rules.
         </p>
@@ -339,7 +339,7 @@
           <img src="./static/images/ablation.png"
           class="exp-image"
           alt="Experimental Results Image."
-          style="width: 55%"/>
+          style="width: 45%"/>
         </div>
         
       </div>
@@ -348,7 +348,7 @@
 
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
+    <h2 class="title"> Reference </h2>
     <pre><code>@misc{fu2024moa,
       title={MoA: Mixture of Sparse Attention for Automatic Large Language Model Compression}, 
       author={Tianyu Fu and Haofeng Huang and Xuefei Ning and Genghan Zhang and Boju Chen and Tianqi Wu and Hongyi Wang and Zixiao Huang and Shiyao Li and Shengen Yan and Guohao Dai and Huazhong Yang and Yu Wang},
